@@ -1,10 +1,22 @@
 .Cell {
   height: 100px;
   width: 100px;
-  background-color: darkgray;
+  background-color: #1b0b54;
   cursor: pointer;
+  transition: .3s ease;
 }
 
 .Cell-lit {
   background-color: white;
+  outline: none;
+  border-color: #00fffc;
+  box-shadow: 0 0 30px #00fffc;
+  transition: .3s ease;
+}
+
+.Cell-li:hover, .Cell:hover {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transition: all 500ms ease;
 }
