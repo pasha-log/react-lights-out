@@ -10,22 +10,23 @@
 
 This is another assignment from Springboard's SWE track. The player's objective is to successfully turn off all the lit cells. Here is [an Wikipedia article going into depth](https://en.wikipedia.org/wiki/Lights_Out_(game)) 
 
-## Tools used:
+## JavaScript Library used:
 
-* React.js
-* CSS
+* React
 
 ## Setup & Running
 
-Created with [Create React App][cra].
+Created with [Create React App](https://create-react-app.dev/).
 
 1. Clone this repository
 
-   ```bash
-   git clone <link> <location>
-   ```
+2. Use the NPM scripts
 
-1. Use the NPM scripts
+   - Install the dependencies 
+
+     ```bash
+     npm i 
+     ```
 
    - Running in development mode
 
