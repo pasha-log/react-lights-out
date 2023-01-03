@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Cell from "./Cell";
-import "./Board.css";
-import img from "./Lights.png"
+import React, { useState } from 'react';
+import Cell from './Cell';
+import './Board.css';
+import img from './Lights.png';
 
 /** Game board of Lights out.
  *
@@ -28,88 +28,100 @@ import img from "./Lights.png"
  *
  **/
 
-// default props: nrows={5}, ncols={5}, chanceLightStartsOn={0.5}
 function Board({ nrows, ncols, chanceLightStartsOn }) {
-  const [board, setBoard] = useState(createBoard());
+	const [ board, setBoard ] = useState(createBoard());
 
-  function chooseRandomBoolean() {
-    let randomBoolean = Math.random() < chanceLightStartsOn;
-    return randomBoolean;
-  }
+	function chooseRandomBoolean() {
+		let randomBoolean = Math.random() < chanceLightStartsOn;
+		return randomBoolean;
+	}
 
-  /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
-  function createBoard() {
-    // TODO: create array-of-arrays of true/false values
-    let initialBoard = Array(nrows).fill([]).map(emptyArray => Array(ncols).fill(null).map(nullElement => nullElement = chooseRandomBoolean()))
-    return initialBoard;
-  }
+	/** create a board nrows high/ncols wide, each cell randomly lit or unlit */
+	function createBoard() {
+		// TODO: create array-of-arrays of true/false values
+		let initialBoard = Array(nrows)
+			.fill([])
+			.map((emptyArray) => Array(ncols).fill(null).map((nullElement) => (nullElement = chooseRandomBoolean())));
+		return initialBoard;
+	}
 
-  function hasWon() {
-    // TODO: check the board in state to determine whether the player has won.
-    const isFalse = (currentValue) => currentValue === false;
-    board.every((a) => { return(a.every(isFalse) ? true : false )});
-  }
+	function hasWon() {
+		// TODO: check the board in state to determine whether the player has won.
+		const isFalse = (currentValue) => currentValue === false;
+		board.every((a) => {
+			return a.every(isFalse) ? true : false;
+		});
+	}
 
-  function flipCellsAroundMe(coord) {
-    setBoard(board => {
-      let [y, x] = coord.split("-").map(Number);
-     
-      // TODO: Make a (deep) copy of the oldBoard
-      
-      let boardCopy = [...board]
-      
-      const flipCells = (y, x, boardCopy) => {
-        // if this coord is actually on board, flip it
-  
-        if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
-          boardCopy[y][x] = !boardCopy[y][x];
-        }
-  
-        // TODO: in the copy, flip this cell and the cells around it
-  
-        if (x-1 !== -1 ) {
-          boardCopy[y][x-1] = !boardCopy[y][x-1]
-        }
-  
-        if (x+1 < ncols) {
-          boardCopy[y][x+1] = !boardCopy[y][x+1]
-        }
-  
-        if (y-1 !== -1) {
-          boardCopy[y-1][x] = !boardCopy[y-1][x]
-        }
-  
-        if (y+1 < nrows) {
-          boardCopy[y+1][x] = !boardCopy[y+1][x]
-        }
-      };
+	function flipCellsAroundMe(coord) {
+		setBoard((board) => {
+			let [ y, x ] = coord.split('-').map(Number);
 
-      flipCells(y, x, boardCopy);
+			// TODO: Make a (deep) copy of the oldBoard
 
-      // TODO: return the copy
-      
-      return boardCopy
-  
-    }); 
-  }
+			let boardCopy = [ ...board ];
 
-  // TODO: if the game is won, just show a winning msg & render nothing else
-  // TODO: make table board
+			const flipCells = (y, x, boardCopy) => {
+				// if this coord is actually on board, flip it
 
-  return (
-    <div>
-      <img className="logo" src={img} alt=""></img>
-    <table className="table" key={"table"}>
-      {hasWon() ? <h1 key="win">You won!</h1> : 
-      <tbody key={"game"}>
-        {board.map((row, y) => <tr key={`${y}`}>{row.map((booleanCell, x) => <Cell flipCellsAroundMe={flipCellsAroundMe} isLit={booleanCell} y={y} x={x} />)}</tr>)}
-      </tbody>
-      }
-    </table>
-    </div>
-  )
+				if (x >= 0 && x < ncols && y >= 0 && y < nrows) {
+					boardCopy[y][x] = !boardCopy[y][x];
+				}
 
+				// TODO: in the copy, flip this cell and the cells around it
+
+				if (x - 1 !== -1) {
+					boardCopy[y][x - 1] = !boardCopy[y][x - 1];
+				}
+
+				if (x + 1 < ncols) {
+					boardCopy[y][x + 1] = !boardCopy[y][x + 1];
+				}
+
+				if (y - 1 !== -1) {
+					boardCopy[y - 1][x] = !boardCopy[y - 1][x];
+				}
+
+				if (y + 1 < nrows) {
+					boardCopy[y + 1][x] = !boardCopy[y + 1][x];
+				}
+			};
+
+			flipCells(y, x, boardCopy);
+
+			// TODO: return the copy
+
+			return boardCopy;
+		});
+	}
+
+	// TODO: if the game is won, just show a winning msg & render nothing else
+	// TODO: make table board
+
+	return (
+		<div>
+			<img className="logo" src={img} alt="" />
+			<table className="table" key={'table'}>
+				{hasWon() ? (
+					<h1 key="win">You won!</h1>
+				) : (
+					<tbody key={'game'}>
+						{board.map((row, y) => (
+							<tr key={`${y}`}>
+								{row.map((cellIsLit, x) => (
+									<Cell 
+                  flipCellsAroundMe={flipCellsAroundMe} 
+                  isLit={cellIsLit} 
+                  y={y} 
+                  x={x} />
+								))}
+							</tr>
+						))}
+					</tbody>
+				)}
+			</table>
+		</div>
+	);
 }
 
 export default Board;
-
