@@ -28,6 +28,13 @@ import img from './Lights.png';
  *
  **/
 
+function hasWon(board) {
+  // TODO: check the board in state to determine whether the player has won.
+  board.every((row) => {
+    return row.every((cell) => cell === false);
+  });
+}
+
 function Board({ nrows, ncols, chanceLightStartsOn }) {
 	const [ board, setBoard ] = useState(createBoard());
 
@@ -41,17 +48,19 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
 		// TODO: create array-of-arrays of true/false values
 		let initialBoard = Array(nrows)
 			.fill([])
-			.map((emptyArray) => Array(ncols).fill(null).map((nullElement) => (nullElement = chooseRandomBoolean())));
+			.map((emptyArray) => 
+      Array(ncols).fill(null).map((nullElement) => 
+      (nullElement = chooseRandomBoolean())));
 		return initialBoard;
 	}
 
-	function hasWon() {
-		// TODO: check the board in state to determine whether the player has won.
-		const isFalse = (currentValue) => currentValue === false;
-		board.every((a) => {
-			return a.every(isFalse) ? true : false;
-		});
-	}
+	// function hasWon() {
+	// 	// TODO: check the board in state to determine whether the player has won.
+	// 	const isFalse = (currentValue) => currentValue === false;
+	// 	board.every((a) => {
+	// 		return a.every(isFalse) ? true : false;
+	// 	});
+	// }
 
 	function flipCellsAroundMe(coord) {
 		setBoard((board) => {
@@ -102,7 +111,7 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
 		<div>
 			<img className="logo" src={img} alt="" />
 			<table className="table" key={'table'}>
-				{hasWon() ? (
+				{hasWon(board) ? (
 					<h1 key="win">You won!</h1>
 				) : (
 					<tbody key={'game'}>
