@@ -54,22 +54,6 @@ function createBoard(nrows, ncols, lightStartsOnProbability) {
 function Board({ nrows, ncols, lightStartsOnProbability }) {
 	const [ board, setBoard ] = useState(createBoard(nrows, ncols, lightStartsOnProbability));
 
-	// function chooseRandomBoolean(lightStartsOnProbability) {
-	// 	let randomBoolean = Math.random() < lightStartsOnProbability;
-	// 	return randomBoolean;
-	// }
-
-	// /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
-	// function createBoard(nrows, ncols, lightStartsOnProbability) {
-	// 	// TODO: create array-of-arrays of true/false values
-	// 	let initialBoard = Array(nrows)
-	// 		.fill([])
-	// 		.map((emptyArray) => 
-  //     Array(ncols).fill(null).map((nullElement) => 
-  //     (nullElement = chooseRandomBoolean(lightStartsOnProbability))));
-	// 	return initialBoard;
-	// }
-
 	function flipCellsAroundMe(coord) {
 		setBoard((board) => {
 			let [ y, x ] = coord.split('-').map(Number);
