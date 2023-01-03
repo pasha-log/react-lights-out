@@ -35,31 +35,39 @@ function hasWon(board) {
   });
 }
 
-function Board({ nrows, ncols, chanceLightStartsOn }) {
-	const [ board, setBoard ] = useState(createBoard());
+function chooseRandomBoolean(lightStartsOnProbability) {
+  let randomBoolean = Math.random() < lightStartsOnProbability;
+  return randomBoolean;
+}
 
-	function chooseRandomBoolean() {
-		let randomBoolean = Math.random() < chanceLightStartsOn;
-		return randomBoolean;
-	}
+/** create a board nrows high/ncols wide, each cell randomly lit or unlit */
+function createBoard(nrows, ncols, lightStartsOnProbability) {
+	// TODO: create array-of-arrays of true/false values
+	let initialBoard = Array(nrows)
+		.fill([])
+		.map((emptyArray) => 
+    Array(ncols).fill(null).map((nullElement) => 
+    (nullElement = chooseRandomBoolean(lightStartsOnProbability))));
+	return initialBoard;
+}
 
-	/** create a board nrows high/ncols wide, each cell randomly lit or unlit */
-	function createBoard() {
-		// TODO: create array-of-arrays of true/false values
-		let initialBoard = Array(nrows)
-			.fill([])
-			.map((emptyArray) => 
-      Array(ncols).fill(null).map((nullElement) => 
-      (nullElement = chooseRandomBoolean())));
-		return initialBoard;
-	}
+function Board({ nrows, ncols, lightStartsOnProbability }) {
+	const [ board, setBoard ] = useState(createBoard(nrows, ncols, lightStartsOnProbability));
 
-	// function hasWon() {
-	// 	// TODO: check the board in state to determine whether the player has won.
-	// 	const isFalse = (currentValue) => currentValue === false;
-	// 	board.every((a) => {
-	// 		return a.every(isFalse) ? true : false;
-	// 	});
+	// function chooseRandomBoolean(lightStartsOnProbability) {
+	// 	let randomBoolean = Math.random() < lightStartsOnProbability;
+	// 	return randomBoolean;
+	// }
+
+	// /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
+	// function createBoard(nrows, ncols, lightStartsOnProbability) {
+	// 	// TODO: create array-of-arrays of true/false values
+	// 	let initialBoard = Array(nrows)
+	// 		.fill([])
+	// 		.map((emptyArray) => 
+  //     Array(ncols).fill(null).map((nullElement) => 
+  //     (nullElement = chooseRandomBoolean(lightStartsOnProbability))));
+	// 	return initialBoard;
 	// }
 
 	function flipCellsAroundMe(coord) {
